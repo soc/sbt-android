@@ -1,6 +1,6 @@
 import ScriptedPlugin._
 
-val pluginVersion = "1.8.0-SNAPSHOT"
+val pluginVersion = "1.7.10"
 val gradleBuildVersion = "1.4.0-SNAPSHOT"
 
 val androidToolsVersion = "2.3.0"
@@ -55,7 +55,7 @@ val gradlebuild = project.in(file("gradle-build")).enablePlugins(BuildInfoPlugin
   organization := "org.scala-android",
   scalacOptions ++= Seq("-deprecation","-Xlint","-feature"),
   libraryDependencies ++= Seq(
-    "com.hanhuy.sbt"          %% "bintray-update-checker" % "0.2",
+    //"com.hanhuy.sbt"          %% "bintray-update-checker" % "0.2",
     "com.google.code.findbugs" % "jsr305"                 % "3.0.1"  % "compile-internal",
     "org.gradle"               % "gradle-tooling-api"     % "2.6"    % "provided",
     "org.slf4j"                % "slf4j-api"              % "1.7.10" // required by gradle-tooling-api
@@ -109,14 +109,15 @@ libraryDependencies ++= Seq(
   "org.ow2.asm" % "asm-all" % "5.0.4",
   "com.google.code.findbugs" % "jsr305" % "3.0.1" % "compile-internal",
   "org.javassist" % "javassist" % "3.20.0-GA",
-  "com.hanhuy.sbt" %% "bintray-update-checker" % "0.2", // 1.0 missing
+  //"com.hanhuy.sbt" %% "bintray-update-checker" % "0.2", // 1.0 missing
   "com.android.tools.build" % "builder" % androidToolsVersion,
   "org.bouncycastle" % "bcpkix-jdk15on" % "1.51",
   "com.android.tools.build" % "gradle-core" % androidToolsVersion excludeAll
     ExclusionRule(organization = "net.sf.proguard"),
   "com.android.tools.lint" % "lint" % "25.3.0",
 //  "com.android.tools.external.com-intellij" % "uast" % "145.597.4", // because google didn't sync the correct version...
-  "net.orfjackal.retrolambda" % "retrolambda" % "2.5.1"
+  "net.orfjackal.retrolambda" % "retrolambda" % "2.5.1",
+  "org.scalaz" %% "scalaz-core" % "7.2.16"
 )
 
 aggregate := false
@@ -154,12 +155,8 @@ pomExtra :=
       </developer>
     </developers>
 
-// scripted-test settings
-scriptedSettings // remove for 1.0
-
 scriptedLaunchOpts ++= Seq("-Xmx1024m", "-Dplugin.version=" + version.value)
 
-//scriptedBufferLog := false
 sbtTestDirectory := baseDirectory(_ / "sbt-test").value
 
 // TODO reorganize tests better, ditch android-sdk-plugin prefix
